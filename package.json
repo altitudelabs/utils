@@ -1,0 +1,27 @@
+{
+  "name": "utils",
+  "version": "0.0.1",
+  "description": "utilities for various tech stacks",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha index.spec.js --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altitudelabs/utils.git"
+  },
+  "author": "Altitude Labs",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.6.1",
+    "mongoose": "^4.4.10"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/altitudelabs/utils/issues"
+  },
+  "homepage": "https://github.com/altitudelabs/utils#readme"
+}
