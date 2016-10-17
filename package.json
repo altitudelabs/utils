@@ -1,5 +1,5 @@
 {
-  "name": "utils",
+  "name": "AL-utils",
   "version": "0.0.1",
   "description": "utilities for various tech stacks",
   "main": "index.js",
