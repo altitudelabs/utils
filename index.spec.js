@@ -1,18 +1,19 @@
 /* global describe, before, after, beforeEach, afterEach, it, expect */
 'use strict';
 
-let fs = require('fs');
-let path = require('path');
-let spec;
+const fs = require('fs');
+const path = require('path');
 
 const mongoose = require('mongoose');
+
 mongoose.connect(process.env.MONGOOSE_TEST_URI || 'mongodb://localhost/test');
 
-fs.readdirSync(path.normalize(`${__dirname}/util`)).forEach((util) => {
+const libPath = `${__dirname}/lib`;
+fs.readdirSync(path.normalize(`${libPath}`)).forEach((util) => {
   if (util.indexOf('.') === -1) { // extension does not exist -> it's a folder
-    fs.readdirSync(path.normalize(`${__dirname}/util/${util}`)).forEach((file) => {
+    fs.readdirSync(path.normalize(`${libPath}/${util}`)).forEach((file) => {
       if (file.indexOf('.spec.js') !== -1) { // find spec.js files
-        require(`${__dirname}/util/${util}/${file}`);  // eslint-disable-line global-require
+        require(`${libPath}/${util}/${file}`);  // eslint-disable-line global-require
       }
     });
   }
