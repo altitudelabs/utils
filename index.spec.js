@@ -1,35 +1,19 @@
 /* global describe, before, after, beforeEach, afterEach, it, expect */
 'use strict';
 
-const chai = require('chai');
-const expect = chai.expect;
+let fs = require('fs');
+let path = require('path');
+let spec;
+
 const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
-const addAction = require('./index').mongo.addAction;
-
 mongoose.connect(process.env.MONGOOSE_TEST_URI || 'mongodb://localhost/test');
 
-const UserSchema = new Schema({ name: String });
-UserSchema.plugin(addAction, { action: 'delete', done: 'deleted' });
-UserSchema.plugin(addAction, { action: 'approve', done: 'approved' });
-
-const User = mongoose.model('User', UserSchema);
-
-describe('addAction', () => {
-  afterEach((done) => {
-    User.remove({}, done);
-  });
-
-  it('adds default props to schema', (done) => {
-    User.create({
-      name: 'tester',
-    }, (err, savedUser) => {
-      savedUser.delete((err, deletedUser) => {
-        expect(deletedUser.isDeleted).to.be.true;
-        expect(deletedUser.isDeletedAt).to.be.instanceof(Date);
-        done(err);
-      });
+fs.readdirSync(path.normalize(`${__dirname}/util`)).forEach((util) => {
+  if (util.indexOf('.') === -1) { // extension does not exist -> it's a folder
+    fs.readdirSync(path.normalize(`${__dirname}/util/${util}`)).forEach((file) => {
+      if (file.indexOf('.spec.js') !== -1) { // find spec.js files
+        require(`${__dirname}/util/${util}/${file}`);  // eslint-disable-line global-require
+      }
     });
-  });
+  }
 });
